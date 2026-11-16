@@ -9,7 +9,7 @@ PORT="${FLYSWATTER_PORT:-8899}"
 echo "==> building & starting flyswatter on 127.0.0.1:${PORT}"
 docker build -t flyswatter .
 docker rm -f flyswatter 2>/dev/null || true
-docker run -d --name flyswatter --restart unless-stopped \
+docker run -d --name flyswatter --restart unless-stopped --user 10001:10001 -e HOME=/tmp \
 	-p 127.0.0.1:"${PORT}":5000 \
 	flyswatter
 
