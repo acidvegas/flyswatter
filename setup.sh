@@ -5,6 +5,7 @@ set -e
 cd "$(dirname "$0")"
 
 PORT="${FLYSWATTER_PORT:-8899}"
+NGINX="${FLYSWATTER_NGINX:-1}" # 0 skips installing the nginx config, for hosts that keep their own
 
 echo "==> building & starting flyswatter on 127.0.0.1:${PORT}"
 docker build -t flyswatter .
@@ -12,6 +13,8 @@ docker rm -f flyswatter 2>/dev/null || true
 docker run -d --name flyswatter --restart unless-stopped --user 10001:10001 -e HOME=/tmp \
 	-p 127.0.0.1:"${PORT}":5000 \
 	flyswatter
+
+[ "$NGINX" = 0 ] && { echo "==> skipping nginx config (FLYSWATTER_NGINX=0)"; exit 0; }
 
 echo "==> installing nginx config"
 mkdir -p /etc/nginx/snippets
