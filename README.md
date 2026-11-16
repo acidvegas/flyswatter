@@ -76,6 +76,7 @@ See `nginx/EXAMPLE-site.conf` for a full example server block.
 ## Config
 
 - `FLYSWATTER_PORT` — host port for the trap container (default `8899`).
+- `FLYSWATTER_NGINX` — set to `0` to only rebuild and restart the container, leaving the nginx config alone *(default `1`)*.
 
 ## Tuning
 
